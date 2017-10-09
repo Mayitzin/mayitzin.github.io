@@ -1,20 +1,58 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely need to edit after that.
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'jekyll serve'. If you change this file, please restart the server process.
+title:            Mario Garcia
+description:      Personal Tech blog of Mario Garcia
+       
 
-# Site settings
-title: Mario Garcia
-email: mario@mayitzin.com
-description: > # this means to ignore newlines until "baseurl:"
-  This is a test for a future project
-  involving every tech piece or content I make.
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://www.mayitzin.com" # the base hostname & protocol for your site
-twitter_username: mayitzin
-github_username:  Mayitzin
+future:      false  # publish future dated posts --  true, false (default) 
+highlighter: rouge
+markdown:    kramdown
+gems:
+  - jekyll-sitemap
+  - jekyll-paginate
+  - jekyll-gist
+  - jekyll-feed
+  
+sass:
+  sass_dir: _sass
+  style: compressed
 
-# Build settings
-markdown: kramdown
+permalink: /:categories/:year-:month-:day/:title.html
+
+# Amount of post to show on home page
+paginate: 5
+
+excerpt_separator: <!--break-->
+
+#kramdown:
+#  input: GFM
+#  auto_ids: true
+#  footnote_nr: 1
+#  entity_output: as_char
+#  toc_levels: 1..6
+#  enable_coderay: false
+
+include: 
+  - .htaccess
+  
+exclude: 
+  - "*.less"
+  - "*.sublime-project"
+  - "*.sublime-workspace"
+  - .asset-cache
+  - .bundle
+  - .jekyll-assets-cache
+  - .sass-cache
+  - CHANGELOG
+  - Capfile
+  - Gemfile
+  - Gruntfile.js
+  - LICENSE
+  - README
+  - Rakefile
+  - config
+  - gulpfile.js
+  - lib
+  - log
+  - node_modules
+  - package.json
+  - spec
+  - tmp
