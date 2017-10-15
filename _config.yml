@@ -5,7 +5,7 @@ description:      Personal Tech blog of Mario Garcia
 future:      false  # publish future dated posts --  true, false (default) 
 highlighter: rouge
 markdown:    kramdown
-gems:
+plugins:
   - jekyll-sitemap
   - jekyll-paginate
   - jekyll-gist
@@ -20,7 +20,7 @@ permalink: /:categories/:year-:month-:day/:title.html
 # Amount of post to show on home page
 paginate: 5
 
-excerpt_separator: <!--break-->
+excerpt_separator: <!--more-->
 
 #kramdown:
 #  input: GFM
