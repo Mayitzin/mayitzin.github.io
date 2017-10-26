@@ -6,6 +6,10 @@ categories: Sensors Robotics
 ---
 Needless to say but Kalman Filtering is one of the most powerful estimation processes in almost any Engineering field. From robotic vacuums to Satellite Guidance, it is everywhere. Here I will explain the how’s and why’s of the Kalman Filter (KF) in our lives.
 
+<center>
+	<img src="https://mayitzintli.files.wordpress.com/2015/02/keep-kalm-an-filter-7.png">
+</center>
+
 Any decent technological project will use this robust method for the final estimation of the position of any intelligent system. The format of the given information can be, fortunately, represented as a Gaussian state.
 
 Thanks to this property, it is possible to use Gaussian filters (KF is one of them), in order to improve the final estimation.
@@ -17,6 +21,10 @@ Gaussian modelling estimations are going to be carried in this explanation, so i
 ## The estimation problem
 
 Let us go straight to the problem with an example. Suppose we have a robot moving freely in a 2D Euclidean space (Cartesian coordinates), and we want to track its real position every time.
+
+<center>
+    <img src="https://mayitzintli.files.wordpress.com/2015/02/kf_01.png">
+</center>
 
 There are several methods to do so and their mix in an adequate way is the secret to the best estimation. The first way is to mathematically estimate the position with simple physical models. Here classical Physics is our big allied and we can roughly use accelerations, velocities, etc.
 
@@ -36,15 +44,42 @@ Under this convention, if we set the beginning at zero and estimate 5 more state
 
 After a mathematical calculation (with classical physics), the robot is estimated to be in a specified new location:
 
+|  |
+|:---:|
+| ![Img-02](https://mayitzintli.files.wordpress.com/2015/06/kf_02.png) |
+
 However, due to a plethora of external forces and effects, the estimation of its position cannot be entirely deterministic and is prone to errors.
 
 The robot can be in the estimated position our somewhere around it, because the mentioned effects can drive it up, down, left, right, the mix of them, or even stay in the same place. It could be anywhere around this original estimation.
+
+<center>
+    <img src="https://mayitzintli.files.wordpress.com/2015/02/kf_03.png">
+</center>
 
 This leads to the concept of **variance**. The [variance](http://www.mathsisfun.com/data/standard-deviation.html) represents how far a bunch of values is spread out.
 
 For our robot a higher variance means that its real position can be far from the original estimation, while a smaller variance means that it can be closer to the estimated position.
 
+<table>
+    <tr>
+        <th>Estimation with large variance</th>
+        <th>Estimation with small variance</th>
+    </tr>
+    <tr>
+        <td>
+            <center><img src="https://mayitzintli.files.wordpress.com/2015/02/kf_04.png?w=250&h=152"></center>
+        </td>
+        <td>
+            <center><img src="https://mayitzintli.files.wordpress.com/2015/02/kf_05.png?w=250&h=152"></center>
+        </td>
+    </tr>
+</table>
+
 Too many drawings of a robot. Let us use the “particle representation”. From now on, the mean position of the robot will be represented with a dot, and its variance with an ellipse around it. This ellipse is the most probable area, where the robot can be located.
+
+<center>
+    <img src="https://mayitzintli.files.wordpress.com/2015/02/kf_06.png">
+</center>
 
 As seen, using only mathematical models is not enough to locate the real position of our robot. But now, we are able to equip the robot with sensors.
 
@@ -62,9 +97,13 @@ $$\mathbf{z}=\mathbf{z}_{real} +\mathbf{v}$$
 
 This $$\mathbf{v}$$ is a perturbation within the variance of the sensor that changes the measurement around the real value and it is assumed to be independent to any other parameter. Visually, the position estimation based merely on sensors can be seen as:
 
+<center>
+    <img src="https://mayitzintli.files.wordpress.com/2015/02/kf_07.png">
+</center>
+
 The dot in the centre is the estimated position given by the sensors (mean) and the ellipse around is the variance of the sensor (the real position is most probably anywhere inside it). The better the sensor, the smaller the variance.
 
-Both estimations, through Odometry and classical Physics, are not perfect and present some variance. This, of course, means that the computations are never going to be perfect. That same property of variance, however, is used to estimate a better position if we apply basic concepts of a mixture of Gaussians (MoG).
+Both estimations, through Odometry and classical Physics, are not perfect and present some variance. This, of course, means that the computations are never going to be perfect. That same property of variance, however, is used to estimate a better position if we apply basic concepts of a [mixture of Gaussians (MoG)](https://www.youtube.com/watch?v=Rkl30Fr2S38).
 
 The definitions of MoG are not in the scope of this article, but the Gaussian properties are used to build the famous Kalman Filter.
 
@@ -74,9 +113,13 @@ The mixture of two Gaussian distributions will give another Gaussian distributio
 
 The distributions used to build the “mixed distribution” are called **priors**, while the resulting new distribution is called a **posterior**.
 
+<center>
+    <img src="https://mayitzintli.files.wordpress.com/2015/02/priorsandposterior1.png?w=628&h=307">
+</center>
+
 This yields to the definition of **Covariance**, which is a measure of how much two random variables change together. If two distributions are the same (almost impossible in real life) then the covariance is equal to the variance of any distribution.
 
-The variables show similar behaviour when the covariance is positive. Random variables whose covariance is zero are called uncorrelated.
+The variables show similar behaviour when the covariance is positive. Random variables whose covariance is zero are called _uncorrelated_.
 
 For a further analysis on the development of these models, please refer to any documentation about [Bayesian Inference](http://en.wikipedia.org/wiki/Bayesian_inference). Here the understanding of the above definitions is enough.
 
@@ -165,6 +208,10 @@ The time update equations can be thought of as predictor equations, while the me
 - Time Update (Predict). The a priori estimations are calculated.
 - Measurement Update (Correct). The a posteriori estimations are updated.
 
+<center>
+    <img src="https://mayitzintli.files.wordpress.com/2015/06/kfalg_00.png">
+</center>
+
 The Kalman Filter conditions recursively the current estimate on all of the past measurements. The time update projects the current state estimate ahead in time, while the measurement update adjusts the projected estimate by an actual measure at that time.
 Kalman Filter Algorithm
 
@@ -205,30 +252,28 @@ $$\mathbf{S}_k = \mathbf{H} \mathbf{\hat{P}^-}_{k} \mathbf{H}^T+ \mathbf{R}$$
 
 $$\mathbf{K}_k = \mathbf{\hat{P}^-}_{k} \mathbf{H}^T \mathbf{S^{-1}}_k = \mathbf{\hat{P}^-}_{k} \mathbf{H}^T \big{(}\mathbf{H} \mathbf{\hat{P}^-}_{k} \mathbf{H}^T+ \mathbf{R}\big{)}^{-1}$$
 
-{:start="5"}
-5. This is a long equation, I know, but a simpler way to see it is as the ratio explained above:
+This is a long equation, I know, but a simpler way to see it is as the ratio explained above:
 
 $$\mathbf{K}_k = \frac{\mathbf{\hat{P}^-}_{k} \mathbf{H}^T}{\mathbf{S}_k} = \frac{\mathbf{\hat{P}^-}_{k} \mathbf{H}^T}{\mathbf{H} \mathbf{\hat{P}^-}_{k} \mathbf{H}^T+ \mathbf{R}}$$
 
 NOTE: Don’t dare to show the latter notation to a Mathematician or you will be yelled at.
 
-{:start="6"}
-6. Compute the innovation.
+{:start="5"}
+5. Compute the innovation.
 
 $$\mathbf{r}_k = \mathbf{z}_k - \mathbf{H} \mathbf{\hat{x}^-}_{k}$$
 
-{:start="7"}
-7. Update the State estimate (a posteriori state).
+{:start="6"}
+6. Update the State estimate (a posteriori state).
 
 $$\mathbf{\hat{x}}_k = \mathbf{\hat{x}^-}_k + \mathbf{K}_k \mathbf{r}_k = \mathbf{\hat{x}^-}_k + \mathbf{K}_k \big{(}\mathbf{z}_k - \mathbf{H} \mathbf{\hat{x}^-}_{k}\big{)}$$
 
-{:start="8"}
-8. Update the Covariance (a posteriori covariance).
+{:start="7"}
+7. Update the Covariance (a posteriori covariance).
 
 $$\mathbf{\hat{P}}_k = \mathbf{\hat{P}^-}_k - \mathbf{K}_k\mathbf{S}_k\mathbf{K}_k^T$$
 
-{:start="9"}
-9. Other literature computes this Covariance with:
+Other literature computes this Covariance with:
 
 $$\mathbf{\hat{P}}_k = \big{(}\mathbf{I}-\mathbf{K}_k\mathbf{H}\big{)}\mathbf{\hat{P}^-}_k$$
 
@@ -279,6 +324,16 @@ def kf(xhat, P, z, A, Q, R, H):
 ```
 
 Let us see, how our robot accurately estimates its position using a Kalman Filter in every step:
+
+|   |   |
+|:--|:-:|
+| Project the State ahead <br> $$\mathbf{\hat{x}^-}_k = \mathbf{A} \mathbf{\hat{x}}_{k-1}$$ | ![KF-Step-1](https://mayitzintli.files.wordpress.com/2015/06/kfalg_01.png?w=300&h=182) |
+| Project the Covariance ahead <br> $$\mathbf{\hat{P}^-}_k = \mathbf{A} \mathbf{\hat{P}^-}_{k-1} \mathbf{A}^T+ \mathbf{Q}$$ | ![KF-Step-2](https://mayitzintli.files.wordpress.com/2015/06/kfalg_02.png?w=300&h=182) |
+| Make a measurement (Don’t forget its Covariance) <br> $$\mathbf{R}$$, $$\mathbf{z}_k$$ | ![KF-Step-3](https://mayitzintli.files.wordpress.com/2015/06/kfalg_03.png?w=300&h=182) |
+| Compute the Kalman Gain <br> $$\mathbf{K}_k = \mathbf{\hat{P}^-}_{k} \mathbf{H}^T \big{(}\mathbf{H} \mathbf{\hat{P}^-}_{k} \mathbf{H}^T+ \mathbf{R}\big{)}^{-1}$$ | ![KF-Step-4](https://mayitzintli.files.wordpress.com/2015/06/kfalg_04.png?w=300&h=182) |
+| Update state estimate <br> $$\mathbf{\hat{x}}_k = \mathbf{\hat{x}^-}_k + \mathbf{K}_k \big{(}\mathbf{z}_k - \mathbf{H} \mathbf{\hat{x}^-}_{k}\big{)}$$ | ![KF-Step-5](https://mayitzintli.files.wordpress.com/2015/06/kfalg_05.png?w=300&h=182) |
+| Update the Covariance <br> $$\mathbf{\hat{P}}_k = \mathbf{\hat{P}^-}_k - \mathbf{K}_k\mathbf{S}_k\mathbf{K}_k^T$$ | ![KF-Step-6](https://mayitzintli.files.wordpress.com/2015/06/kfalg_06.png?w=300&h=182) |
+| Start Again | ![KF-Step-0](https://mayitzintli.files.wordpress.com/2015/06/kfalg_07.png?w=300&h=182) |
 
 ## Model Parameters
 
@@ -478,7 +533,7 @@ $$\mathbf{H}_k = \frac{d}{d\mathbf{x}}h(\mathbf{\hat{x}}) = \begin{pmatrix}\frac
 
 Do not be scared with such equations. They are simpler than what it seems and the only hard part is the derivation of each element if it is done manually.
 
-You’re welcome to do so, but if you prefer to save your time (and self-embarrasment) like me I suggest you to use symbolic mathematical programs like Mathematica (or its free alternatives Maxima or SymPy), which will calculate all these elements in a fraction of a second.
+You’re welcome to do so, but if you prefer to save your time (and self-embarrasment) like me I suggest you to use symbolic mathematical programs like [Mathematica](http://www.wolfram.com/mathematica/) (or its free alternatives [Maxima](http://maxima.sourceforge.net/) or [SymPy](http://www.sympy.org/en/index.html)), which will calculate all these elements in a fraction of a second.
 
 Yes, now all the elements of $$\mathbf{A}$$ and $$\mathbf{H}$$ also need to be recomputed in every timestamp. The number of elements in the state vector $$\mathbf{x}$$ and the complexity of your functions $$f$$ and $$h$$ will decide the time of these computations. The EKF is then resumed as:
 

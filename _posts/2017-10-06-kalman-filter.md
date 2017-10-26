@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 Needless to say but Kalman Filtering is one of the most powerful estimation processes in almost any Engineering field. From robotic vacuums to Satellite Guidance, it is everywhere. Here I will explain the how’s and why’s of the Kalman Filter (KF) in our lives.
 
 <center>
-	<img src="https://mayitzintli.files.wordpress.com/2015/02/keep-kalm-an-filter-7.png">
+	<img src="https://mayitzintli.files.wordpress.com/2015/02/keep-kalm-an-filter-7.png" width="300" height="350">
 </center>
 
 Any decent technological project will use this robust method for the final estimation of the position of any intelligent system. The format of the given information can be, fortunately, represented as a Gaussian state.

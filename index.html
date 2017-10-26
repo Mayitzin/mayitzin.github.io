@@ -12,7 +12,9 @@ layout: post-index
     
     <!-- POST CONTENT -->
     <div class="entry-content">
-        {{ post.content }}
+        {% if post.excerpt %}
+            {{ post.excerpt }}
+        {% endif %}
     </div>
     
     <!--- DIVIDING LINE -->
@@ -41,8 +43,10 @@ layout: post-index
 </article>
 {% endfor %}
 
+
+
 <div class="pagination">
 <center>
 {% include pagination.html %}
 </center>
-    </div>
+</div>
