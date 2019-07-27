@@ -177,7 +177,17 @@ b, i, strong, em, blockquote, p, q, span, figure, img, h1, h2, header, input, a 
 }
 
 .entry-title {
-    font-weight: 100;
+	font-weight: 100;
+}
+
+.main-header-title {
+	color: white;
+	font-weight: 100;
+	font-size: 850%;
+	position: absolute;
+	top: 0%;
+	left: 50%;
+	transform: translate(-50%, 20%);
 }
 
 .main-header-image {
@@ -194,7 +204,7 @@ b, i, strong, em, blockquote, p, q, span, figure, img, h1, h2, header, input, a 
     
     img:hover {
         opacity: 0.8;
-    }
+	}
 }
 
 .post-date {
